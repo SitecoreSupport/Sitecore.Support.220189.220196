@@ -77,6 +77,39 @@ namespace Sitecore.Support.EDS.Core.Reporting
             return this.BounceType;
         }
 
+        public virtual BounceStatus InspectEmail(IPop3Мail pop3Мail, MailMan mailMan)
+        {
+            BounceStatus bounceStatus = this.InspectMime(pop3Мail.GetMime);
+            if (bounceStatus == BounceStatus.NotBounce)
+            {
+                Email email = mailMan.FetchEmail(pop3Мail.Uidl);
+                if (email != null)
+                {
+                    int num;
+                    if (base.ExamineEmail(email))
+                    {
+                        bounceStatus = this.MapChilkatBounceToBounce(base.BounceType);
+                    }
+                    else if (email.IsMultipartReport() && int.TryParse(email.GetDeliveryStatusInfo("Status").Replace(".", string.Empty), out num))
+                    {
+                        if (num >= 200 && num < 300)
+                        {
+                            bounceStatus = BounceStatus.NotBounce;
+                        }
+                        else if (num >= 400 && num < 500)
+                        {
+                            bounceStatus = BounceStatus.SoftBounce;
+                        }
+                        else if (num >= 500 && num < 600)
+                        {
+                            bounceStatus = BounceStatus.HardBounce;
+                        }
+                    }
+                }
+            }
+            return bounceStatus;
+        }
+
         private BounceStatus MapChilkatBounceToBounce(int chilkatBounce)
         {
             switch (chilkatBounce)

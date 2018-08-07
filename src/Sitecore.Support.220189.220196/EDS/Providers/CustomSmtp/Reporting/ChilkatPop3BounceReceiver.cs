@@ -113,21 +113,23 @@ namespace Sitecore.Support.EDS.Providers.CustomSmtp.Reporting
                     var bouncedMessages = new List<Bounce>();
                     foreach (var pop3Мail in messages)
                     {
-
-                        var fullМail = chilkatPop3Client.GetMail(pop3Мail.Uidl);
-                        if (fullМail == null)
+                        var status = this.inspector.InspectEmail(pop3Мail, chilkatPop3Client); // Sitecore.Support.220196.220189
+                        if (status != BounceStatus.NotBounce)
                         {
-                            continue;
-                        }
+                            var fullМail = chilkatPop3Client.GetMail(pop3Мail.Uidl);
+                            if (fullМail == null)
+                            {
+                                continue;
+                            }
 
-                        var environmentIdHeader = fullМail.GetHeader(Sitecore.EDS.Core.Constants.XSitecoreEnvironmentId);
-                        if (this.environmentId.IsMatching(environmentIdHeader))
-                        {
-                            var message = this.MapToBounce(fullМail);
-                            bouncedMessages.Add(message);
+                            var environmentIdHeader = fullМail.GetHeader(Sitecore.EDS.Core.Constants.XSitecoreEnvironmentId);
+                            if (this.environmentId.IsMatching(environmentIdHeader))
+                            {
+                                var message = this.MapToBounce(fullМail, status);
+                                bouncedMessages.Add(message);
+                            }
                         }
                     }
-
 
                     if (bouncedMessages.Count > 0)
                     {
@@ -156,7 +158,7 @@ namespace Sitecore.Support.EDS.Providers.CustomSmtp.Reporting
         /// <returns>
         /// Bounce objects.
         /// </returns>
-        private Bounce MapToBounce(IPop3Мail pop3Мail)
+        private Bounce MapToBounce(IPop3Мail pop3Мail, BounceStatus bounceType)
         {
             return new Bounce
             {
@@ -164,6 +166,9 @@ namespace Sitecore.Support.EDS.Providers.CustomSmtp.Reporting
                 MessageId = pop3Мail.GetHeader(Sitecore.EDS.Core.Constants.XBatchId),
                 CampaignId = pop3Мail.GetHeader(Sitecore.EDS.Core.Constants.XSitecoreCampaign),
                 ContactId = pop3Мail.GetHeader(Sitecore.EDS.Core.Constants.XMessageId),
+                // Sitecore.Support.220196.220189: set InstanceId and BounceType
+                InstanceId = pop3Мail.GetHeader(Sitecore.EDS.Core.Constants.XBatchId),
+                BounceType = bounceType
             };
         }
     }
