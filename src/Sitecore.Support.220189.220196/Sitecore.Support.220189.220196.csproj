@@ -45,12 +45,20 @@
       <HintPath>..\packages\EXM.ChilkatDotNet45.3.5.2\lib\ChilkatDotNet45.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Sitecore.Analytics, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SC.Sitecore.Analytics.8.2.7\lib\Sitecore.Analytics.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Sitecore.EDS.Core, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EXM.Sitecore.EDS.Core.3.5.2\lib\Sitecore.EDS.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.EDS.Providers.CustomSmtp, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EXM.Sitecore.EDS.Providers.CustomSmtp.3.5.2\lib\Sitecore.EDS.Providers.CustomSmtp.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.EmailCampaign.Model, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\EXM.Sitecore.EmailCampaign.Model.3.5.2\lib\Sitecore.EmailCampaign.Model.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Sitecore.ExM.Framework, Version=5.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -75,6 +83,7 @@
     <Compile Include="EDS\Core\Reporting\ChilkatBounceInspector.cs" />
     <Compile Include="EDS\Providers\CustomSmtp\Reporting\ChilkatPop3BounceReceiver.cs" />
     <Compile Include="Modules\EmailCampaign\Core\MessageTransfer\ManagerRootsPop3ReceiversCollection.cs" />
+    <Compile Include="Modules\EmailCampaign\Core\Pipelines\HandleMessageEventBase\SetCustomValues.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -84,6 +93,7 @@
     <None Include="packages.config" />
     <None Include="web.config" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

@@ -169,7 +169,8 @@ namespace Sitecore.Support.EDS.Providers.CustomSmtp.Reporting
                 // Sitecore.Support.220196.220189: set InstanceId and BounceType
                 InstanceId = pop3Мail.GetHeader(Sitecore.EDS.Core.Constants.XBatchId),
                 BounceType = bounceType,
-                EmailAddress = pop3Мail.GetHeader("X-Failed-Recipients")
+                EmailAddress = pop3Мail.GetHeader("X-Failed-Recipients"),
+                TargetLanguage = Sitecore.Context.Language.ToString()
             };
         }
     }
