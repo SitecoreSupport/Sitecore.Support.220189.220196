@@ -34,11 +34,12 @@
             MessageItem messageItem = args.MessageItem;
             TouchPointRecord arg_DE_0 = args.TouchPointRecord;
             ExmCustomValues exmCustomValues;
-            if (string.IsNullOrWhiteSpace(args.TargetLanguage) && args.MessageEventName != "Dispatch Failed")
+            //sitecore.support.220189.220196
+            /*if (string.IsNullOrWhiteSpace(args.TargetLanguage) && args.MessageEventName != "Dispatch Failed")
             {
                 exmCustomValues = this.GetCustomValues(args, messageItem);
-            }
-            else
+            }*/
+            //else
             {
                 exmCustomValues = new ExmCustomValues
                 {
@@ -62,7 +63,9 @@
             exmCustomValuesHolder.ExmCustomValues.Add(1, exmCustomValues);
             arg_DE_0.CustomValues["ScExmHolder"] = exmCustomValuesHolder;
         }
-        private ExmCustomValues GetCustomValues(HandleMessageEventPipelineArgs args, MessageItem messageItem)
+
+        //sitecore.support.220189.220196
+        /*private ExmCustomValues GetCustomValues(HandleMessageEventPipelineArgs args, MessageItem messageItem)
         {
             ExmCustomValues customValues;
             try
@@ -75,6 +78,6 @@
                 throw;
             }
             return customValues;
-        }
+        }*/
     }
 }
